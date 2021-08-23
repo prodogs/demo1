@@ -17,6 +17,7 @@ public class CapabilityApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
+        theDatabase = new Database();
         CapabilityApp.mainStage = stage;
 
        // capabilityFormScene = createCapabilityForm();

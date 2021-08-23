@@ -1,5 +1,6 @@
 package com.investrics.Capability;
 
+import com.mongodb.ConnectionString;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.client.MongoCollection;
@@ -12,9 +13,10 @@ public class Database {
 
 
     public Database() {
+
         mongoClient =  new MongoClient( "localhost" , 27017 );
-        mongoCredential = MongoCredential.createCredential("capuser", "JavaCap",
-                "password".toCharArray());
+        mongoCredential = MongoCredential.createCredential("MyAkita", "JavaCap",
+                "MyAkita".toCharArray());
         System.out.println("Connected to the database successfully");
 
         this.mongoDatabase = this.mongoClient.getDatabase("JavaCap");
