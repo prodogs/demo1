@@ -1,5 +1,5 @@
 package com.investrics.Capability;
-import com.investrics.Capability.BusinessObjects.Capability;
+import com.investrics.Capability.BusinessObjects.Dimension;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -34,9 +34,9 @@ public class CapabilityApp extends Application {
 
         this.theDatabase = new Database();
 
-        Capability aCapability = new Capability();
+        Dimension aDimension = new Dimension();
 
-        var theList = aCapability.getAll();
+        var theList = aDimension.GetAll();
 
         for (int i=0;i < theList.size();i++) {
             var theCapability = theList.get(i);

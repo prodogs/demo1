@@ -1,7 +1,6 @@
 package com.investrics.Capability;
 
-import com.investrics.Capability.BusinessObjects.Capability;
-import javafx.beans.property.StringProperty;
+import com.investrics.Capability.BusinessObjects.Dimension;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -35,9 +34,9 @@ public class CapabilityFormController {
     @FXML
     ListView capabilityListView;
 
-    private ArrayList<Capability> capabilityList;
-    private ObservableList<Capability>  observeList;
-    private Capability currentSelection;
+    private ArrayList<Dimension> dimensionList;
+    private ObservableList<Dimension>  observeList;
+    private Dimension currentSelection;
 
     public CapabilityFormController() {
         setCurrentSelection(null);
@@ -54,9 +53,9 @@ public class CapabilityFormController {
 
     @FXML
     public void initialize() {
-        var aCapability = new Capability();
+        var aCapability = new Dimension();
 
-        var capabilityList = aCapability.getAll();
+        var capabilityList = aCapability.GetAll();
 
         observeList = FXCollections.observableArrayList(capabilityList);
 
@@ -72,9 +71,9 @@ public class CapabilityFormController {
 
 
         capabilityListView.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<Capability>() {
-                    public void changed(ObservableValue<? extends Capability> ov,
-                                        Capability old_val, Capability new_val) {
+                new ChangeListener<Dimension>() {
+                    public void changed(ObservableValue<? extends Dimension> ov,
+                                        Dimension old_val, Dimension new_val) {
                         handleSelectionChange(old_val,new_val);
 
 
@@ -99,7 +98,7 @@ public class CapabilityFormController {
         }
 
         if (currentSelection==null) {
-            var newCapability = new Capability();
+            var newCapability = new Dimension();
             newCapability.setName(nameField.getText());
             newCapability.setDescription(descriptionField.getText());
 
@@ -140,7 +139,7 @@ public class CapabilityFormController {
       currentSelection = null;
     }
 
-    public void setCurrentSelection(Capability newCurrent) {
+    public void setCurrentSelection(Dimension newCurrent) {
 
         this.currentSelection = newCurrent;
         if (newCurrent==null) return;
@@ -158,7 +157,7 @@ public class CapabilityFormController {
 
     }
 
-    public void handleSelectionChange(Capability oldValue, Capability newValue) {
+    public void handleSelectionChange(Dimension oldValue, Dimension newValue) {
         System.out.println("Capability Name "+newValue.getName());
         this.setCurrentSelection(newValue);
 
