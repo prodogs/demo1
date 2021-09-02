@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.security.DrbgParameters;
 
 public class CapabilityApp extends Application {
     public static Database theDatabase;
@@ -39,8 +40,8 @@ public class CapabilityApp extends Application {
         var theList = aDimension.GetAll();
 
         for (int i=0;i < theList.size();i++) {
-            var theCapability = theList.get(i);
-            System.out.println("Capability Name "+theCapability.getName());
+            var theCapability = (Dimension) theList.get(i);
+            System.out.println("Object String"+theCapability.getName());
 
         }
 

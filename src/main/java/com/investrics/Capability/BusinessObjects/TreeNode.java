@@ -1,8 +1,10 @@
 package com.investrics.Capability.BusinessObjects;
 
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TreeNode extends DataObject{
 
@@ -15,7 +17,21 @@ public class TreeNode extends DataObject{
     private ArrayList<TreeNode> childrenNodes;
 
     public TreeNode() {
-        super("CapabilityTreeNode");
+        super("TreeNode");
+    }
+
+    @Override
+    public DataObject inflateObject(Document theDocument) {
+
+        var theDimension = new Dimension();
+        theDimension.setName((String) theDocument.get("name"));
+        theDimension.setDescription((String) theDocument.get("description"));
+        theDimension.setLastUpdate((Date) theDocument.get("lastUpdate"));
+        theDimension.setCreationTime((Date) theDocument.get("creationTime"));
+
+        theDimension.oid = (ObjectId) theDocument.getObjectId("_id");
+        theDimension.theDocument = theDocument;
+        return theDimension;
     }
 
     public TreeNode(Tree theTree, Dimension aDimension) {

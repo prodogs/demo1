@@ -7,7 +7,6 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -31,14 +30,28 @@ public class DataObject extends  Object {
     public Document GetDocument() {
         return theDocument;
     }
+
+    // Generic Insert
     public void insert() {
+        var insertDocument = this.deflateObject();
+        insertDocument.append("creationTime", new Date());
+        insertDocument.append("lastUpdate", new Date());
+
+        MongoCollection<Document> collection = GetCollection();
+
+        collection.insertOne(insertDocument);
+
+        this.oid = insertDocument.getObjectId("_id");
+
+        System.out.println("Capability Added  "+this.oid.toString());
+        System.out.println(insertDocument);
 
     }
     public void update() {
         MongoCollection capCollection =  DataObject.GetCollection();
 
         Document query = new Document().append("_id",this.oid);
-        var newDoc = this.populateDocument();
+        var newDoc = this.deflateObject();
 
         Document updates = new Document().append("$set",newDoc);
 
@@ -56,7 +69,7 @@ public class DataObject extends  Object {
     public void delete() {
     }
 
-    public Document populateDocument() {
+    public Document deflateObject() {
         return new Document();
     }
     public void setLastUpdate(Date lastUpdate) {
@@ -100,14 +113,18 @@ public class DataObject extends  Object {
 
         while (it.hasNext()) {
             theDocument = (Document) it.next();
-            var theDataObject = Dimension.Inflate(theDocument);
+            var theDataObject = this.inflateObject(theDocument);
             theList.add(theDataObject);
             i++;
         }
         return  theList;
     }
 
-    public static void Delete(Dimension deleteThis) {
+    public DataObject inflateObject(Document theDocument) {
+        return null;
+    }
+
+    public  void Delete(DataObject deleteThis) {
         Document query = new Document().append("_id",deleteThis.oid);
         MongoCollection capCollection =  Dimension.GetCollection();
         try {
