@@ -8,9 +8,10 @@ import java.util.Date;
 
 public class TreeNode extends DataObject{
 
-
     private Dimension   nodeDimension;
-    private Tree        theTree;
+    private String      name;
+    private String      description;
+    private Tree        tree;
     private ObjectId    treeOID;
     private ObjectId    dimensionOID;
     private String      name;
@@ -23,15 +24,21 @@ public class TreeNode extends DataObject{
     @Override
     public DataObject inflateObject(Document theDocument) {
 
-        var theDimension = new Dimension();
-        theDimension.setName((String) theDocument.get("name"));
-        theDimension.setDescription((String) theDocument.get("description"));
-        theDimension.setLastUpdate((Date) theDocument.get("lastUpdate"));
-        theDimension.setCreationTime((Date) theDocument.get("creationTime"));
+        var theNode = new TreeNode();
+        theNode.setName((String) theDocument.get("name"));
+        theNode.setDescription((String) theDocument.get("description"));
+        theNode.setTreeOID((ObjectId) theDocument.get("treeOID"));
+        theNode.setLastUpdate((Date) theDocument.get("lastUpdate"));
+        theNode.setCreationTime((Date) theDocument.get("creationTime"));
 
-        theDimension.oid = (ObjectId) theDocument.getObjectId("_id");
-        theDimension.theDocument = theDocument;
-        return theDimension;
+        theNode.oid = (ObjectId) theDocument.getObjectId("_id");
+        theNode.theDocument = theDocument;
+        return theNode;
+    }
+
+    @Override
+    public Document deflateObject() {
+        return super.deflateObject();
     }
 
     public TreeNode(Tree theTree, Dimension aDimension) {
@@ -40,12 +47,8 @@ public class TreeNode extends DataObject{
         this.dimensionOID = aDimension.getObjectId();
         this.name = aDimension.getName();
     }
-
-    public String GetName() {
-        return name;
-    }
-
-    public Dimension GetCapability() {
+    
+    public Dimension GetDimension() {
         return nodeDimension;
     }
 
@@ -53,27 +56,21 @@ public class TreeNode extends DataObject{
         return dimensionOID;
     }
 
-    public void SetCapabilityId(ObjectId capabilityID) {
-        this.dimensionOID = capabilityID;
+    public void SetDimensionId(ObjectId dimensionID) {
+        this.dimensionOID = dimensionID;
     }
 
-    public void SetName(String name) {
-        this.name = name;
-    }
-
-    public TreeNode addChildCapability(Dimension childDimension) {
-        var capabilityTreeNode = new TreeNode(this.theTree, childDimension);
+    public TreeNode addChild(Dimension childDimension) {
+        var capabilityTreeNode = new TreeNode(this.tree, childDimension);
         childrenNodes.add(capabilityTreeNode);
         return capabilityTreeNode;
     }
 
-    public TreeNode addChildCapabilityNode(TreeNode childNode) {
+    public TreeNode addChildNode(TreeNode childNode) {
         childrenNodes.add(childNode);
         return childNode;
     }
-
-
-
+    
     public TreeNode removeChildNode(TreeNode childNode) {
         for( int i = 0; i < childrenNodes.size(); i++){
             var aNode = childrenNodes.get(i);
@@ -85,7 +82,7 @@ public class TreeNode extends DataObject{
         return null;
     }
 
-    public TreeNode removeCapabilityChild(Dimension childDimension) {
+    public TreeNode removeChild(Dimension childDimension) {
         for( int i = 0; i < childrenNodes.size(); i++){
             var aNode = childrenNodes.get(i);
             if (aNode.nodeDimension.getObjectId() == childDimension.getObjectId()) {
@@ -94,6 +91,32 @@ public class TreeNode extends DataObject{
             }
         }
         return null;
+    }
+    
+    public String getName() {
+        return this.name;
+    }
+    public String getDescription() {
+        return this.description;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setDescription(String description) {
+        this.description = description
+    }
+    public void setTree(Tree theTree) {
+        this.tree = theTree;
+        this.treeOID = theTree.getObjectId();
+    }
+    public ObjectId getTreeOID() {
+        return treeOID;
+    }
+    public void setTreeOID(ObjectId treeOID) {
+        this.treeOID = treeOID;
+    }
+    public Tree getTree() {
+        return tree;
     }
 
 
