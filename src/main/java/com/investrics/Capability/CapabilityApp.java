@@ -33,7 +33,7 @@ public class CapabilityApp extends Application {
     public Scene createCapabilityForm() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CapabilityApp.class.getResource("CapabilityForm.fxml"));
 
-        this.theDatabase = new Database();
+        theDatabase = new Database();
 
         Dimension aDimension = new Dimension();
 

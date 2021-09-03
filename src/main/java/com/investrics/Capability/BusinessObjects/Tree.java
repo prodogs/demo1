@@ -41,10 +41,9 @@ public class Tree extends  DataObject {
     }
 
     public void addChild(TreeNode treeNode) {
-        return;
+        ;
     }
     public void removeChild(TreeNode treeNode) {
-        return;
     }
 
     @Override
@@ -58,6 +57,5 @@ public class Tree extends  DataObject {
     }
 
     public void insert() {
-        return;
     }
 }
