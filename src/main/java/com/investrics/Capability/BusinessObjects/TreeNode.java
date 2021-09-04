@@ -14,7 +14,6 @@ public class TreeNode extends DataObject{
     private Tree        tree;
     private ObjectId    treeOID;
     private ObjectId    dimensionOID;
-    private String      name;
     private ArrayList<TreeNode> childrenNodes;
 
     public TreeNode() {
@@ -103,7 +102,7 @@ public class TreeNode extends DataObject{
         this.name = name;
     }
     public void setDescription(String description) {
-        this.description = description
+        this.description = description;
     }
     public void setTree(Tree theTree) {
         this.tree = theTree;

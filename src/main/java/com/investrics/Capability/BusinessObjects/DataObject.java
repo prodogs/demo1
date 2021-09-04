@@ -7,15 +7,16 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
-public class DataObject extends  Object {
+public class DataObject {
 
     protected ObjectId oid;
     protected Document theDocument;
-    protected static String collectionName;
+    protected  String collectionName;
     protected Date lastUpdate;
     protected Date creationTime;
 
@@ -37,7 +38,7 @@ public class DataObject extends  Object {
         insertDocument.append("creationTime", new Date());
         insertDocument.append("lastUpdate", new Date());
 
-        MongoCollection<Document> collection = GetCollection();
+        MongoCollection collection = GetCollection();
 
         collection.insertOne(insertDocument);
 
@@ -48,7 +49,7 @@ public class DataObject extends  Object {
 
     }
     public void update() {
-        MongoCollection capCollection =  DataObject.GetCollection();
+        MongoCollection capCollection =  this.GetCollection();
 
         Document query = new Document().append("_id",this.oid);
         var newDoc = this.deflateObject();
@@ -88,21 +89,33 @@ public class DataObject extends  Object {
         return this.creationTime;
     }
 
-    public static String GetCollectionName() {
-        return collectionName;
+    public  String GetCollectionName() {
+        return this.collectionName;
 
     }
-    public static MongoCollection GetCollection() {
-        return CapabilityApp.theDatabase.getCollection(collectionName);
+    public  MongoCollection GetCollection() {
+        return CapabilityApp.theDatabase.getCollection(this.collectionName);
 
     }
 
-    public  ArrayList GetAll() {
+    public DataObject getOne(ObjectId oid) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        MongoCollection<Document> collection = CapabilityApp.theDatabase.GetMongoDatabase().getCollection(collectionName);
+
+        var findDoc = new Document();
+        findDoc.append("objectId",oid);
+        var dataObject = collection.find(findDoc).first();
+
+        var newObject = Factory.CreateDataObjectFromDocument(this.collectionName,dataObject);
+
+        return newObject;
+    }
+
+    public  ArrayList GetAll() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         MongoCollection<Document> collection = CapabilityApp.theDatabase.GetMongoDatabase().getCollection(collectionName);
         FindIterable<Document> iterDoc = collection.find();
 
-        Logger.Log("Getting"+DataObject.GetCollection()+" Collection");
+        Logger.Log("Getting"+this.GetCollection()+" Collection");
 
         var theList = new ArrayList<>();
         int i = 1;
@@ -120,13 +133,13 @@ public class DataObject extends  Object {
         return  theList;
     }
 
-    public DataObject inflateObject(Document theDocument) {
+    public DataObject inflateObject(Document theDocument) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         return null;
     }
 
     public  void Delete(DataObject deleteThis) {
         Document query = new Document().append("_id",deleteThis.oid);
-        MongoCollection capCollection =  Dimension.GetCollection();
+        MongoCollection capCollection =  this.GetCollection();
         try {
             capCollection.deleteOne(query);
 

@@ -3,6 +3,7 @@ package com.investrics.Capability.BusinessObjects;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,10 +24,10 @@ public class Relationship extends DataObject {
     public ObjectId getToId() {
         return toId;
     }
-    public String getFromClass() {
+    public String   getFromClass() {
         return fromClass;
     }
-    public String getToClass() {
+    public String   getToClass() {
         return toClass;
     }
     public void setFromId(ObjectId fromId) {
@@ -55,7 +56,7 @@ public class Relationship extends DataObject {
     }
 
     @Override
-    public DataObject inflateObject(Document theDocument) {
+    public DataObject inflateObject(Document theDocument) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
 
         var theRelationship = new Relationship();
         theRelationship.setFromId((ObjectId) theDocument.get("fromId"));
