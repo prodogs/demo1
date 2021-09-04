@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.security.DrbgParameters;
 
 public class CapabilityApp extends Application {
@@ -30,7 +31,7 @@ public class CapabilityApp extends Application {
 
     }
 
-    public Scene createCapabilityForm() throws IOException {
+    public Scene createCapabilityForm() throws IOException, ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         FXMLLoader fxmlLoader = new FXMLLoader(CapabilityApp.class.getResource("CapabilityForm.fxml"));
 
         theDatabase = new Database();

@@ -57,10 +57,10 @@ public class Tree extends  DataObject {
     public TreeNode getRoot() {
         return rootNode;
     }
-    public void setRoot(TreeNode rootNode) { this.setRoot(rootNode);}
+    public void setRoot(TreeNode rootNode) { this.rootNode=rootNode;}
 
     public void addChild(TreeNode treeNode) {
-        ;
+
     }
     public void removeChild(TreeNode treeNode) {
     }

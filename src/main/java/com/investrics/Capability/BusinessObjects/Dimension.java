@@ -7,6 +7,7 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -47,7 +48,7 @@ public class Dimension extends DataObject {
     }
 
     @Override
-    public ArrayList GetAll() {
+    public ArrayList GetAll() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         return super.GetAll();
     }
 

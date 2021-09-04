@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class CapabilityFormController {
@@ -52,7 +53,7 @@ public class CapabilityFormController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         var aCapability = new Dimension();
 
         var capabilityList = aCapability.GetAll();

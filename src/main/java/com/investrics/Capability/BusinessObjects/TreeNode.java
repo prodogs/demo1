@@ -30,7 +30,7 @@ public class TreeNode extends DataObject{
         theNode.setLastUpdate((Date) theDocument.get("lastUpdate"));
         theNode.setCreationTime((Date) theDocument.get("creationTime"));
 
-        theNode.oid = (ObjectId) theDocument.getObjectId("_id");
+        theNode.oid =  theDocument.getObjectId("_id");
         theNode.theDocument = theDocument;
         return theNode;
     }
